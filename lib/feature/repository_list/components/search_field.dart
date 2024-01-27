@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 
+/// Name: SearchField
+/// Description: 検索フィールド
 class SearchField extends StatelessWidget {
   SearchField({super.key, required this.onFixedText});
 
+  /// 検索ボタン押下時,サブミットのコールバック
   final void Function(String) onFixedText;
+
+  /// テキストコントローラー
   final TextEditingController _controller = TextEditingController();
+
+  /// フォーカスノード
+  final FocusNode _focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +23,8 @@ class SearchField extends StatelessWidget {
           children: [
             Expanded(
               child: TextField(
+                textInputAction: TextInputAction.search,
+                focusNode: _focusNode,
                 controller: _controller,
                 decoration: const InputDecoration(
                   border: InputBorder.none,
@@ -23,6 +33,7 @@ class SearchField extends StatelessWidget {
                 ),
                 onSubmitted: (text) {
                   onFixedText.call(text);
+                  _focusNode.unfocus();
                 },
               ),
             ),
@@ -30,6 +41,7 @@ class SearchField extends StatelessWidget {
               icon: const Icon(Icons.search),
               onPressed: () {
                 onFixedText.call(_controller.text);
+                _focusNode.unfocus();
               },
             ),
           ],
