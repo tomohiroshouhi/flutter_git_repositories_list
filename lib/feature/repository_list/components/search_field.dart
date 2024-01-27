@@ -23,6 +23,7 @@ class SearchField extends StatelessWidget {
           children: [
             Expanded(
               child: TextField(
+                key: const Key('search_text_field'),
                 textInputAction: TextInputAction.search,
                 focusNode: _focusNode,
                 controller: _controller,
@@ -38,6 +39,7 @@ class SearchField extends StatelessWidget {
               ),
             ),
             IconButton(
+              key: const Key('search_icon_button'),
               icon: const Icon(Icons.search),
               onPressed: () {
                 onFixedText.call(_controller.text);
