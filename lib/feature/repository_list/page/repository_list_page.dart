@@ -32,6 +32,7 @@ class _RepositoryListPageScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Column(
+      key: const Key('repository_list_page_screen'),
       children: [
         SearchField(
           onFixedText: (text) {
@@ -57,10 +58,12 @@ class _RepositoryListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      key: const Key('repository_list'),
       itemCount: listRepository.length,
       itemBuilder: (context, index) {
         final item = listRepository[index];
         return ListItem(
+          key: Key('repository_list_item_$index'),
           repositoryItem: item,
           onTap: () {
             Navigator.push(
@@ -86,6 +89,7 @@ class _NoItemView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
+      key: Key('no_repository_data'),
       child: Text('Repository not found'),
     );
   }
@@ -104,6 +108,7 @@ class _BuildSelectorResultView extends ConsumerWidget {
       return const _NoItemView();
     } else if (data is RepositoryDataLoading) {
       return const Center(
+        key: Key('loading_repository_data'),
         child: CircularProgressIndicator(),
       );
     } else if (data is SeccessRepositoryData) {

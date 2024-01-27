@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../models/git_repository_model.dart';

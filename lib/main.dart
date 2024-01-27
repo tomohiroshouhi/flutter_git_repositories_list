@@ -3,9 +3,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'feature/repository_list/page/repository_list_page.dart';
 
+// coverage:ignore-start
 void main() {
   runApp(const ProviderScope(child: MyApp()));
 }
+// coverage:ignore-end
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
