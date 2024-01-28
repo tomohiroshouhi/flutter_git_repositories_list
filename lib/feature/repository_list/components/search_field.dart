@@ -16,8 +16,9 @@ class SearchField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 50,
+    return Container(
+      height: 48,
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
       child: Card(
         child: Row(
           children: [
@@ -27,10 +28,15 @@ class SearchField extends StatelessWidget {
                 textInputAction: TextInputAction.search,
                 focusNode: _focusNode,
                 controller: _controller,
+                maxLines: 1,
                 decoration: const InputDecoration(
                   border: InputBorder.none,
                   hintText: 'Search',
-                  contentPadding: EdgeInsets.all(16),
+                  contentPadding: EdgeInsets.only(
+                    right: 16.0,
+                    left: 16.0,
+                    bottom: 8.0,
+                  ),
                 ),
                 onSubmitted: (text) {
                   onFixedText.call(text);

@@ -14,13 +14,12 @@ class RepositoryListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
+    return Scaffold(
       appBar: AppBar(
         title: const Text('Repositories'),
       ),
       body: const _RepositoryListPageScreen(),
-    ));
+    );
   }
 }
 
@@ -57,7 +56,7 @@ class _RepositoryListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return ListView.separated(
       key: const Key('repository_list'),
       itemCount: listRepository.length,
       itemBuilder: (context, index) {
@@ -77,6 +76,9 @@ class _RepositoryListView extends StatelessWidget {
           },
         );
       },
+      separatorBuilder: (context, index) {
+        return const Divider();
+      },
     );
   }
 }
@@ -90,7 +92,15 @@ class _NoItemView extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Center(
       key: Key('no_repository_data'),
-      child: Text('Repository not found'),
+      child: SizedBox(
+        height: 150.0,
+        child: Column(
+          children: [
+            Text('Repository not found.'),
+            Text('Please enter the search word and search.')
+          ],
+        ),
+      ),
     );
   }
 }
