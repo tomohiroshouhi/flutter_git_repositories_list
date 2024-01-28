@@ -23,21 +23,24 @@ class ListItem extends StatelessWidget {
         height: 80,
         child: InkWell(
           onTap: onTap,
-          child: Card(
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('name: ${repositoryItem.name ?? ''}'),
-                      Text('owner name: ${repositoryItem.owner?.login ?? ''}'),
-                    ],
-                  ),
-                ),
-                const Icon(Icons.arrow_right_alt_rounded),
-              ],
+          child: ListTile(
+            leading: (repositoryItem.owner?.avatarUrl != null)
+                ? CircleAvatar(
+                    backgroundImage:
+                        NetworkImage(repositoryItem.owner!.avatarUrl!),
+                  )
+                : const SizedBox.shrink(),
+            title: Text(
+              'repository: ${repositoryItem.name ?? ''}',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
+            subtitle: Text(
+              'owner: ${repositoryItem.owner?.login ?? ''}',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            trailing: const Icon(Icons.arrow_forward_ios),
           ),
         ));
   }

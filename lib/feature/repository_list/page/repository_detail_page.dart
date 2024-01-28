@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../models/git_repository_model.dart';
 
@@ -21,13 +22,11 @@ class RepositoryDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Repository Detail'),
-        ),
-        body: _RepositoryDetailScreen(repositoryItem: repositoryItem),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Repository Detail'),
       ),
+      body: _RepositoryDetailScreen(repositoryItem: repositoryItem),
     );
   }
 }
@@ -39,18 +38,34 @@ class _RepositoryDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final children = RepositoryContent.values
+        .map<Widget>(
+          (e) => _TitleConentWidget(
+            keyName: e.name,
+            title: e.title,
+            content: e.buildContent(repositoryItem),
+          ),
+        )
+        .toList();
+    children.add(
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ElevatedButton(
+          key: const Key('open_web_button'),
+          onPressed: (repositoryItem.htmlUrl != null)
+              ? () async {
+                  final url = Uri.parse(repositoryItem.htmlUrl!);
+                  if (!await launchUrl(url)) {}
+                }
+              : null,
+          child: const Text('Open URL'),
+        ),
+      ),
+    );
     return SingleChildScrollView(
       key: const Key('repository_detail_screen'),
       child: Column(
-        children: RepositoryContent.values
-            .map(
-              (e) => _TitleConentWidget(
-                keyName: e.name,
-                title: e.title,
-                content: e.buildContent(repositoryItem),
-              ),
-            )
-            .toList(),
+        children: children,
       ),
     );
   }
@@ -69,12 +84,24 @@ class _TitleConentWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       key: Key('title_content_widget_$keyName'),
       children: [
-        Flexible(flex: 1, child: Text(title)),
+        Flexible(
+            flex: 1,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(title),
+            )),
         Flexible(
           flex: 2,
-          child: content,
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: content,
+            ),
+          ),
         ),
       ],
     );
@@ -132,8 +159,8 @@ extension RepositoryContentExtension on RepositoryContent {
         return Column(
           children: [
             Container(
-              width: 110.0,
-              height: 110.0,
+              width: 60.0,
+              height: 60.0,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: (repositoryItem.owner?.avatarUrl != null)
@@ -146,21 +173,42 @@ extension RepositoryContentExtension on RepositoryContent {
                   ? const Center(child: Icon(Icons.person))
                   : null,
             ),
+            const SizedBox(height: 8.0),
             Text(repositoryItem.owner?.login ?? ''),
           ],
         );
       case RepositoryContent.description:
-        return Text('${repositoryItem.description}');
+        return Text(repositoryItem.description ?? '未設定');
       case RepositoryContent.language:
-        return Text('${repositoryItem.language}');
+        return Text(repositoryItem.language ?? '未設定');
       case RepositoryContent.stargazersCount:
-        return Text('${repositoryItem.stargazersCount}');
+        return Row(
+          children: [
+            const Icon(Icons.star),
+            Text(' x ${repositoryItem.stargazersCount}'),
+          ],
+        );
       case RepositoryContent.watchersCount:
-        return Text('${repositoryItem.watchersCount}');
+        return Row(
+          children: [
+            const Icon(Icons.remove_red_eye),
+            Text(' x ${repositoryItem.watchersCount}'),
+          ],
+        );
       case RepositoryContent.forksCount:
-        return Text('${repositoryItem.forksCount}');
+        return Row(
+          children: [
+            const Icon(Icons.call_split),
+            Text(' x ${repositoryItem.forksCount}'),
+          ],
+        );
       case RepositoryContent.openIssuesCount:
-        return Text('${repositoryItem.openIssuesCount}');
+        return Row(
+          children: [
+            const Icon(Icons.error),
+            Text(' x ${repositoryItem.openIssuesCount}'),
+          ],
+        );
     }
   }
 }

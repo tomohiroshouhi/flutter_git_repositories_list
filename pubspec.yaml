@@ -1,5 +1,5 @@
 name: rep_list
-description: "A new Flutter project."
+description: "Search for a GitHub user and see their repositories."
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
@@ -13,6 +13,9 @@ dependencies:
   hooks_riverpod: ^2.4.9
   http: ^1.2.0
   equatable: ^2.0.5
+  url_launcher: ^6.2.4
+  flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.3.9
 
 dev_dependencies:
   flutter_test:
@@ -53,3 +56,20 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+flutter_icons:       
+  android: true
+  ios: true
+  image_path: "assets/images/app_icon.png"
+  adaptive_icon_background: "#262626"
+  adaptive_icon_foreground: "assets/images/app_icon.png"
+
+flutter_native_splash:
+  color: "#262626"
+  image: assets/images/app_icon.png
+  android_gravity: center
+  ios_content_mode: center
+  fullscreen: true
+  android_12:
+    icon_background_color: '#262626'
+    image: assets/images/app_icon.png
