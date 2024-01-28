@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rep_list/feature/repository_list/page/repository_detail_page.dart';
@@ -16,7 +18,8 @@ extension TesterRobot on WidgetTester {
       find.byFavoriteKey('repository_detail_screen');
   Finder findByDetailContent(RepositoryContent content) =>
       find.byFavoriteKey(content.name);
-  Finder get findByBackButton => find.byIcon(Icons.arrow_back);
+  Finder get findByBackButton =>
+      find.byIcon((Platform.isIOS) ? Icons.arrow_back_ios : Icons.arrow_back);
 
   Future<void> enterTextForSearchField(String text) async {
     await enterText(findBySearchTextField, text);

@@ -16,12 +16,15 @@ dependencies:
   url_launcher: ^6.2.4
   flutter_launcher_icons: ^0.13.1
   flutter_native_splash: ^2.3.9
+  mockito: ^5.4.4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^2.0.0
+  integration_test:
+    sdk: flutter
 
 flutter:
   uses-material-design: true
