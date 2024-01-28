@@ -48,7 +48,8 @@ class _RepositoryDetailScreen extends StatelessWidget {
           ),
         )
         .toList();
-    children.add(
+    children.insert(
+      3,
       Padding(
         padding: const EdgeInsets.all(8.0),
         child: ElevatedButton(
