@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../components/animated_icon.dart';
 import '../models/git_repository_model.dart';
 
 enum RepositoryContent {
@@ -184,7 +185,7 @@ extension RepositoryContentExtension on RepositoryContent {
       case RepositoryContent.stargazersCount:
         return Row(
           children: [
-            const Icon(Icons.star),
+            const AnimationIcon(icon: Icons.star, size: 60.0),
             Text(' x ${repositoryItem.stargazersCount}'),
           ],
         );

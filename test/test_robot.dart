@@ -40,8 +40,12 @@ extension TesterRobot on WidgetTester {
   }
 
   Future<void> tapListItem() async {
-    await tap(findByFirstListItem);
-    await pumpAndSettle();
+    await runAsync(() async {
+      await tap(findByFirstListItem);
+      for (int count = 0; count < 10; count += 1) {
+        await pump();
+      }
+    });
   }
 
   Future<void> tapBackButton() async {
