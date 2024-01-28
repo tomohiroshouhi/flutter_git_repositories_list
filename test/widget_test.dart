@@ -24,11 +24,9 @@ void main() {
 
     await tester.enterTextForSearchField('flutter');
     await tester.tapIconButtun();
-
     expect(tester.findByFirstListItem, findsOne);
 
     await tester.tapListItem();
-
     expect(tester.findByDetailScreen, findsOne);
 
     await tester.tapBackButton();
