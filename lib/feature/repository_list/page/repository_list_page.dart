@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../components/list_item.dart';
 import '../components/search_field.dart';
 import '../models/git_repository_model.dart';
+import '../models/repository_data_model.dart';
 import '../providers/repository_list_provider.dart';
 import 'repository_detail_page.dart';
 
@@ -121,9 +122,9 @@ class _BuildSelectorResultView extends ConsumerWidget {
         key: Key('loading_repository_data'),
         child: CircularProgressIndicator(),
       );
-    } else if (data is SeccessRepositoryData) {
+    } else if (data is ResponseRepositoryData) {
       return _RepositoryListView(
-        listRepository: data.items,
+        listRepository: data.data.items,
       );
     }
     return const Placeholder();

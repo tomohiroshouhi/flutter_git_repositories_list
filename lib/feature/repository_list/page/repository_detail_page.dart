@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../components/animated_icon.dart';
-import '../models/git_repository_model.dart';
+import '../models/repository_data_model.dart';
 
 enum RepositoryContent {
   name,
@@ -54,12 +54,10 @@ class _RepositoryDetailScreen extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: ElevatedButton(
           key: const Key('open_web_button'),
-          onPressed: (repositoryItem.htmlUrl != null)
-              ? () async {
-                  final url = Uri.parse(repositoryItem.htmlUrl!);
-                  if (!await launchUrl(url)) {}
-                }
-              : null,
+          onPressed: () async {
+            final url = Uri.parse(repositoryItem.htmlUrl ?? '');
+            if (!await launchUrl(url)) {}
+          },
           child: const Text('Open URL'),
         ),
       ),
@@ -156,7 +154,7 @@ extension RepositoryContentExtension on RepositoryContent {
   Widget buildContent(Items repositoryItem) {
     switch (this) {
       case RepositoryContent.name:
-        return Text('${repositoryItem.name}');
+        return Text(repositoryItem.name ?? '未設定');
       case RepositoryContent.ownerName:
         return Column(
           children: [
@@ -176,7 +174,7 @@ extension RepositoryContentExtension on RepositoryContent {
                   : null,
             ),
             const SizedBox(height: 8.0),
-            Text(repositoryItem.owner?.login ?? ''),
+            Text(repositoryItem.owner!.login!),
           ],
         );
       case RepositoryContent.description:
@@ -208,7 +206,7 @@ extension RepositoryContentExtension on RepositoryContent {
         return Row(
           children: [
             const Icon(Icons.error),
-            Text(' x ${repositoryItem.openIssuesCount}'),
+            Text(' x ${repositoryItem.openIssues}'),
           ],
         );
     }

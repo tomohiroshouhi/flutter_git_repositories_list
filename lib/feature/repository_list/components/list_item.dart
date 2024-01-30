@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/git_repository_model.dart';
+import '../models/repository_data_model.dart';
 
 /// Name: ListItem
 /// Description: リポジトリ一覧のリストアイテム
@@ -31,12 +31,12 @@ class ListItem extends StatelessWidget {
                   )
                 : const SizedBox.shrink(),
             title: Text(
-              'repository: ${repositoryItem.name ?? ''}',
+              'repository: ${repositoryItem.name}',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
             subtitle: Text(
-              'owner: ${repositoryItem.owner?.login ?? ''}',
+              'owner: ${repositoryItem.owner!.login}',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),

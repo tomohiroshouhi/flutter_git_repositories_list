@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mockito/mockito.dart';
 import 'package:rep_list/feature/repository_list/models/git_repository_model.dart';
+import 'package:rep_list/feature/repository_list/models/repository_data_model.dart';
 import 'package:rep_list/feature/repository_list/providers/repository_list_provider.dart';
 
 class Listener extends Mock {
@@ -50,18 +51,22 @@ void main() {
       verifyNoMoreInteractions(listener);
 
       container.read(repositoryListProvider.notifier).state =
-          SeccessRepositoryData(
-        totalCount: 0,
-        incompleteResults: false,
-        items: const [],
+          ResponseRepositoryData(
+        data: const SeccessRepositoryData(
+          totalCount: 0,
+          incompleteResults: false,
+          items: [],
+        ),
       );
 
       verify(listener(
         NoRepositoryData(),
-        SeccessRepositoryData(
-          totalCount: 0,
-          incompleteResults: false,
-          items: const [],
+        ResponseRepositoryData(
+          data: const SeccessRepositoryData(
+            totalCount: 0,
+            incompleteResults: false,
+            items: [],
+          ),
         ),
       )).called(1);
       verifyNoMoreInteractions(listener);

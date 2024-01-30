@@ -5,6 +5,8 @@ import '../models/git_repository_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
+import '../models/repository_data_model.dart';
+
 final repositoryListProvider =
     StateNotifierProvider<RepositoryListProvider, RepositoryData>(
         (_) => RepositoryListProvider());
@@ -24,8 +26,10 @@ class RepositoryListProvider extends StateNotifier<RepositoryData> {
     if (response.statusCode == 200) {
       var jsonResponse =
           convert.jsonDecode(response.body) as Map<String, dynamic>;
-      final successData = SeccessRepositoryData.fromJson(jsonResponse);
-      if (successData.items.isEmpty) {
+      final successData = ResponseRepositoryData(
+        data: SeccessRepositoryData.fromJson(jsonResponse),
+      );
+      if (successData.data.items.isEmpty) {
         state = NoRepositoryData();
       } else {
         state = successData;
